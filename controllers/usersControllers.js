@@ -1,8 +1,8 @@
 import users from "../models/users.js";
 import { hashPassword } from "../lib/bcrypt.js";
-import pagination from "./pagination.js";
+import pagination from "../services/pagination.js";
 
-//Get all users Account 
+//Get all users Account
 export const getUsers = async (req, res, next) => {
   try {
     const allUser = await users.findAll();

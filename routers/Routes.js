@@ -1,14 +1,7 @@
 import express from "express";
 import multer from "multer";
 import { verifyUser } from "../middlewares/AuthUsers.js";
-import {
-  getMovies,
-  getMoviesById,
-  createMovies,
-  updateMovies,
-  deleteMovies,
-  uploadMovie,
-} from "../controllers/moviesControllers.js";
+import MovieController from "../controllers/movieControllers.js";
 import {
   createUsers,
   deleteUser,
@@ -26,11 +19,11 @@ router.get("/", function (req, res) {
 });
 
 //router For Movie
-router.get("/api/movies", verifyUser, getMovies); //Show all movies
-router.get("/api/movies/:id", verifyUser, getMoviesById); //show movies with id
-router.post("/api/movies", verifyUser, createMovies); //create a new movie
-router.put("/api/movies/:id", verifyUser, updateMovies); //Update a movie with id
-router.delete("/api/movies/:id", deleteMovies); //Delete a movie with id
+router.get("/api/movies", verifyUser, MovieController.findAll); //Show all movies
+router.get("/api/movies/:id", verifyUser, MovieController.findOne); //show movies with id
+router.post("/api/movies", verifyUser, MovieController.create); //create a new movie
+router.put("/api/movies/:id", verifyUser, MovieController.update); //Update a movie with id
+router.delete("/api/movies/:id", verifyUser, MovieController.destroy); //Delete a movie with id
 
 //router for auth
 router.get("/api/users/me", me); //check status account
