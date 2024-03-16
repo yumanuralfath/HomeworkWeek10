@@ -44,7 +44,7 @@ class MovieRepository {
       if (!movie)
         throw {
           name: "ErrorNotFound",
-          message: "Game not found",
+          message: "Movie not found",
         };
       await movie.update(body);
     } catch (err) {

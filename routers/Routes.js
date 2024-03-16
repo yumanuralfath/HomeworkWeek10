@@ -2,13 +2,7 @@ import express from "express";
 import multer from "multer";
 import { verifyUser } from "../middlewares/AuthUsers.js";
 import MovieController from "../controllers/movieControllers.js";
-import {
-  createUsers,
-  deleteUser,
-  getUsers,
-  getUsersById,
-  updateUsers,
-} from "../controllers/usersControllers.js";
+import userController from "../controllers/userController.js";
 import { login, logout, me } from "../controllers/authControllers.js";
 import diskStorage from "../uploads/uploads.js";
 const router = express.Router();
@@ -32,11 +26,11 @@ router.delete("/api/users/logout", logout); //Logout route
 
 //router for user management
 
-router.get("/api/users", verifyUser, getUsers); //get All Users Data
-router.get("/api/users/:id", verifyUser, getUsersById); //get users by id
-router.post("/api/users/register", createUsers); //Register User
-router.put("/api/users/:id", verifyUser, updateUsers); //update existing user
-router.delete("/api/users/:id", verifyUser, deleteUser); //delete existing user
+router.get("/api/users", verifyUser, userController.findAll); //get All Users Data
+router.get("/api/users/:id", verifyUser, userController.findOne); //get users by id
+router.post("/api/users/register", userController.create); //Register User
+router.put("/api/users/:id", verifyUser, userController.update); //update existing user
+router.delete("/api/users/:id", verifyUser, userController.destroy); //delete existing user
 
 //router for upload file
 // POST endpoint for uploading movie images
