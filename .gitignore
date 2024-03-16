@@ -2,3 +2,4 @@ node_modules
 database.json
 pnpm-lock.yaml
 config/config.json
+.env

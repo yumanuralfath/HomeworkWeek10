@@ -15,7 +15,7 @@ export const getMovies = async (req, res, next) => {
 };
 
 //Get movies from the database by Id
-export const getMoviesById = async (req, res, next) => {
+export const getMoviesById = async (req, res) => {
   try {
     let whereCondition;
     if (
@@ -40,7 +40,7 @@ export const getMoviesById = async (req, res, next) => {
 
     res.status(200).json(movie);
   } catch (error) {
-    next(error);
+    return res.status(500).json({ msg: error.message });
   }
 };
 
@@ -97,6 +97,43 @@ export const deleteMovies = async (req, res, next) => {
 
     await existingMovies.destroy();
     res.status(200).json({ msg: "Movie deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+//upload movies photo
+export const uploadMovie = async (req, res, next) => {
+  try {
+    let whereCondition;
+    if (
+      /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/.test(
+        req.params.id
+      )
+    ) {
+      whereCondition = { id: req.params.id };
+    } else if (!isNaN(req.params.id)) {
+      whereCondition = { id: req.params.id };
+    } else {
+      return res.status(400).json({ msg: "Invalid ID format" });
+    }
+
+    const movie = await movies.findOne({
+      where: whereCondition,
+    });
+
+    if (!movie) {
+      return res.status(404).json({ msg: "Movie not found" });
+    }
+
+    // Simpan path gambar ke dalam entri movies
+    const imagePath = req.file.path;
+    movie.photo = imagePath;
+    await movie.save(); // Simpan perubahan
+
+    return res
+      .status(200)
+      .json({ msg: "Movie photo updated successfully", imagePath });
   } catch (error) {
     next(error);
   }

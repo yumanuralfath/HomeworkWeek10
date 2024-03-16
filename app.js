@@ -5,6 +5,10 @@ import session from "express-session";
 import sequelizeStore from "connect-session-sequelize";
 import db from "./config/database.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 dotenv.config();
 
 const sessionStore = sequelizeStore(session.Store);
@@ -31,8 +35,9 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use("/image", express.static(path.join(__dirname, "uploads")));
 app.use(router);
-app.use(errorHandler)
+app.use(errorHandler);
 
 // db.sync()
 // database checked
