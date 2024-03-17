@@ -28,7 +28,7 @@ router.delete("/api/users/logout", logout); //Logout route
 
 router.get("/api/users", verifyUser, userController.findAll); //get All Users Data
 router.get("/api/users/:id", verifyUser, userController.findOne); //get users by id
-router.post("/api/users/register", userController.create); //Register User
+router.post("/api/users/", userController.create); //Register User
 router.put("/api/users/:id", verifyUser, userController.update); //update existing user
 router.delete("/api/users/:id", verifyUser, userController.destroy); //delete existing user
 
