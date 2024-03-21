@@ -1,64 +1,64 @@
-import userService from "../services/userService.js";
+import userService from '../services/userService.js'
 
 class userController {
-  //find all users
+  // find all users
   static findAll = async (req, res, next) => {
     try {
-      const user = await userService.findAll(req.query);
-      res.status(200).json(user);
+      const user = await userService.findAll(req.query)
+      res.status(200).json(user)
     } catch (err) {
-      next(err);
+      next(err)
     }
-  };
+  }
 
-  //find user by id
+  // find user by id
   static findOne = async (req, res, next) => {
     try {
-      const user = await userService.findOne(req.params.id);
+      const user = await userService.findOne(req.params.id)
       res.status(200).json({
-        data: user,
-      });
+        data: user
+      })
     } catch (err) {
-      next(err);
+      next(err)
     }
-  };
+  }
 
-  //create a new user
+  // create a new user
   static create = async (req, res) => {
     try {
-      await userService.create(req.body);
-      res.status(200).json({ msg: "Created Account Successfully" });
+      await userService.create(req.body)
+      res.status(200).json({ msg: 'Created Account Successfully' })
     } catch (err) {
-      res.status(400).json({ error: err.message });
+      res.status(400).json({ error: err.message })
     }
-  };
+  }
 
-  //update user account
+  // update user account
   static update = async (req, res, next) => {
     try {
       const params = {
         id: req.params.id,
-        body: req.body,
-      };
+        body: req.body
+      }
 
-      await userService.update(params);
+      await userService.update(params)
 
-      res.status(200).json({ message: "Users Account updated successfully" });
+      res.status(200).json({ message: 'Users Account updated successfully' })
     } catch (err) {
-      next(err);
+      next(err)
     }
-  };
+  }
 
-  //user Delete Account
+  // user Delete Account
   static destroy = async (req, res, next) => {
     try {
-      await userService.destroy(req.params.id);
+      await userService.destroy(req.params.id)
 
-      res.status(200).json({ message: "User Account Has Been Deleted" });
+      res.status(200).json({ message: 'User Account Has Been Deleted' })
     } catch (err) {
-      next(err);
+      next(err)
     }
-  };
+  }
 }
 
-export default userController;
+export default userController

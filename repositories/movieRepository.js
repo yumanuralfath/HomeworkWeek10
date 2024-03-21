@@ -1,68 +1,69 @@
-import movies from "../models/movies.js";
+import movies from '../models/movies.js'
 
 class MovieRepository {
   static findAll = async (params) => {
     try {
-      const { count, rows } = await movies.findAndCountAll(params);
+      const { count, rows } = await movies.findAndCountAll(params)
       return {
         count,
-        rows,
-      };
+        rows
+      }
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
   static findOne = async (params) => {
     try {
-      const movie = await movies.findOne(params);
-      return movie;
+      const movie = await movies.findOne(params)
+      return movie
     } catch (err) {
-      throw err;
+      throw err
     }
-  };
+  }
 
   static create = async (params) => {
     try {
       const movie = await movies.create(params, {
-        returning: true,
-      });
-      return movie;
+        returning: true
+      })
+      return movie
     } catch (error) {
-      throw error;
+      throw error
     }
-  };
+  }
 
   static update = async (id, body) => {
     try {
       const movie = await movies.findOne({
         where: {
-          id,
-        },
-      });
+          id
+        }
+      })
 
-      if (!movie)
+      if (!movie) {
         throw {
-          name: "ErrorNotFound",
-          message: "Movie not found",
-        };
-      await movie.update(body);
+          name: 'ErrorNotFound',
+          message: 'Movie not found'
+        }
+      }
+      await movie.update(body)
     } catch (err) {
-      throw err;
+      throw err
     }
-  };
+  }
 
   static destroy = async (params) => {
     try {
-      const movie = await movies.findOne(params);
+      const movie = await movies.findOne(params)
 
-      if (!movie) throw { name: "ErrorNotFound", message: "Movie not found" };
+      if (!movie) throw { name: 'ErrorNotFound', message: 'Movie not found' }
 
-      await movie.destroy();
+      await movie.destroy()
     } catch (err) {
-      throw err;
+      throw err
     }
-  };
+  }
 }
 
-export default MovieRepository;
+export default MovieRepository
